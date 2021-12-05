@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/new-instructor}" th:object="${student}">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div><br>
+    <p th:if="${#fields.hasErrors('username')}" th:text="${'username ' + #fields.errors('username')}"/>
+    <input type="text" th:field="*{username}" placeholder="username"/> <br>
+    <p th:if="${#fields.hasErrors('password')}" th:text="${'Password: ' + #fields.errors('password')}"/>
+    <input type="password" placeholder="Password" th:field="*{password}"><br>
+    <p th:if="${#fields.hasErrors('name')}" th:text="${'Name: ' + #fields.errors('name')}"/>
+    <input type="text" placeholder="Name" th:field="*{name}"><br>
+    <p th:if="${#fields.hasErrors('family')}" th:text="${'Family name: ' + #fields.errors('family')}"/>
+    <input type="text" placeholder="Family Name" th:field="*{family}"><br>
+    <p th:if="${#fields.hasErrors('nationalId')}" th:text="${'nationalId: ' + #fields.errors('nationalId')}"/>
+    <input type="text" placeholder="National Id" th:field="*{nationalId}"><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

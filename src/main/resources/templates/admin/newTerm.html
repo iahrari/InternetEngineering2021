@@ -1,0 +1,30 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/new-term}" th:object="${term}">
+  <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+  </div><br>
+  <input type="number" max="1" min="0" placeholder="Term" th:field="*{termDate.term}"/><br>
+  <input type="number" min="1397" max="1500" placeholder="Year" th:field="*{termDate.year}">
+  <br><br>
+  <span th:if="${#fields.hasErrors('enrollStart')}">
+    <ul>
+      <li th:each="err : ${#fields.errors('enrollStart')}" th:text="${err}"></li>
+    </ul>
+  </span>
+  <label for="enrollStart">Enroll start:</label>
+  <input id="enrollStart" type="date" th:field="*{enrollStart}" placeholder="yyyy-MM-dd"/><br>
+  <label for="enrollEnd">Enroll End:</label>
+  <input id="enrollEnd" type="date" th:field="*{enrollEnd}" placeholder="yyyy-MM-dd"/><br><br>
+  <label for="examStart">Exam start: </label>
+  <input id="examStart" type="date" th:field="*{examStart}" placeholder="yyyy-MM-dd"/><br>
+  <label for="examEnd">Exam End: </label>
+  <input id="examEnd" type="date" th:field="*{examEnd}" placeholder="yyyy-MM-dd"/><br>
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>

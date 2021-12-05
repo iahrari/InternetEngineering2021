@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post" th:action="@{/admin/assign-course/__${courseId}__}">
+        <input type="number" min="1397" max="1500"
+               th:placeholder="${currentTerm.termDate.year}"
+               th:field="${termDate.year}"
+               placeholder="Year" disabled><br>
+
+        <input type="number" max="1" min="0"
+               th:placeholder="${termDate.term}"
+               th:value="${currentTerm.termDate.term}"
+               placeholder="Term" disabled><br>
+
+        <input type="text" th:field="${instructor.username}" placeholder="Instructor Username"><br>
+        <input type="text" th:field="${timeTable.saturday}" placeholder="Saturday"><br>
+        <input type="text" th:field="${timeTable.sunday}" placeholder="sunday"><br>
+        <input type="text" th:field="${timeTable.monday}" placeholder="monday"><br>
+        <input type="text" th:field="${timeTable.tuesday}" placeholder="tuesday"><br>
+        <input type="text" th:field="${timeTable.wednesday}" placeholder="wednesday"><br>
+        <input type="text" th:field="${timeTable.thursday}" placeholder="thursday"><br><br>
+
+        <label for="examStart">Exam date: </label>
+        <input id="examStart" type="datetime-local"
+               th:min="${#dates.format(currentTerm.examStart, 'yyyy-MM-dd') + 'T'
+                            + #dates.format(currentTerm.examStart, 'HH:mm:ss')}"
+               th:max="${#dates.format(currentTerm.examEnd, 'yyyy-MM-dd') + 'T'
+                            + #dates.format(currentTerm.examEnd, 'HH:mm:ss')}"
+               th:field="${examDate.data}"/><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

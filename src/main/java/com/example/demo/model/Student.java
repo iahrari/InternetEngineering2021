@@ -1,51 +1,29 @@
 package com.example.demo.model;
 
-public class Student {
-    private String name;
-    private String family;
-    private String codemelli;
-    private String sn;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-    public Student(String name, String family, String codemelli, String sn) {
-        this.name = name;
-        this.family = family;
-        this.codemelli = codemelli;
-        this.sn = sn;
+import javax.persistence.*;
+import java.util.*;
+
+@EqualsAndHashCode(callSuper = true, exclude = "studentLessons")
+@ToString(callSuper = true, exclude = "studentLessons")
+@Entity
+@Data
+@NoArgsConstructor
+public class Student extends User {
+
+    @Builder
+    public Student(String username, String name, String family, String password, String nationalId) {
+        super(username, name, family, password, nationalId);
     }
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<StudentLesson> studentLessons = new ArrayList<>();
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFamily() {
-        return family;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
-    }
-
-    public String getCodemelli() {
-        return codemelli;
-    }
-
-    public void setCodemelli(String codemelli) {
-        this.codemelli = codemelli;
-    }
-
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
-
-    public String getRegisterQuery() {
-        return "INSERT INTO student(name, family, studentid, codemelli) VALUES ('" + name + "','"+ family + "','"+ sn + "','" + codemelli +"');";
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(Roles.ROLE_STUDENT.getRole()));
     }
 }

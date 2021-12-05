@@ -1,33 +1,33 @@
 package com.example.demo.model;
 
-public class Instructor {
 
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-    private String name;
-    private String family;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-    public Instructor(String name, String family) {
-        this.name = name;
-        this.family = family;
+@Entity(name = "instructors")
+@NoArgsConstructor
+@Data
+@ToString(callSuper = true, exclude = "instructorCourse")
+@EqualsAndHashCode(exclude = "instructorCourse", callSuper = true)
+public class Instructor extends User {
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<InstructorCourse> instructorCourse;
+
+    @Builder
+    public Instructor(String username, String name, String family, String password, String nationalId) {
+        super(username, name, family, password, nationalId);
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(Roles.ROLE_INSTRUCTOR.getRole()));
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFamily() {
-        return family;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
-    }
-
-    public String getReisterQuery() {
-        return "INSERT INTO instructor(name, family) VALUES ('" + name + "','" + family +"');";
-    }
 }
