@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.model.validation.IsEven;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,26 +20,32 @@ import java.util.Objects;
 public class TimeTable implements Serializable {
     @Min(8)
     @Max(18)
+    @IsEven
     private Short saturday;
 
     @Min(8)
     @Max(18)
+    @IsEven
     private Short sunday;
 
     @Min(8)
     @Max(18)
+    @IsEven
     private Short monday;
 
     @Min(8)
     @Max(18)
+    @IsEven
     private Short tuesday;
 
     @Min(8)
     @Max(18)
+    @IsEven
     private Short wednesday;
 
     @Min(8)
     @Max(18)
+    @IsEven
     private Short thursday;
 
     public boolean conflict(TimeTable other){

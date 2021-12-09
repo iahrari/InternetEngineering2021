@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -34,7 +35,7 @@ public class InstructorCourse {
     private Set<StudentLesson> studentLesson;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime examDate;
+    private Date examDate;
 
     @Embedded
     private TimeTable timeTable;

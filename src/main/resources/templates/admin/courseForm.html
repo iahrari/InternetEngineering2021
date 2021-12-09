@@ -4,12 +4,32 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" th:action="@{/admin/new-course}" th:object="${course}">
+<form method="post" th:action="@{/admin/courses}" th:object="${course}">
     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
     </div><br>
     <input type="text" th:field="*{name}">
     <button type="submit">Submit</button>
 </form>
+
+<table th:if="${!courses.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Term's detail</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="course" type="com.example.demo.model.Course"*/-->
+    <tr th:each="course: ${courses}">
+        <td th:text="${course.id}">1</td>
+        <td th:text="${course.name}">Internet Engineering</td>
+        <td><a th:href="@{/admin/assign-course/__${course.id}__}">detail</a></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

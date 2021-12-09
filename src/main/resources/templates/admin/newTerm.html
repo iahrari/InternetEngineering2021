@@ -4,7 +4,7 @@
   <title>Title</title>
 </head>
 <body>
-<form method="post" th:action="@{/admin/new-term}" th:object="${term}">
+<form method="post" th:action="@{/admin/terms}" th:object="${term}">
   <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
     <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
   </div><br>
@@ -26,5 +26,30 @@
   <input id="examEnd" type="date" th:field="*{examEnd}" placeholder="yyyy-MM-dd"/><br>
   <button type="submit">Submit</button>
 </form>
+
+<table th:if="${!terms.isEmpty()}">
+  <thead>
+  <tr>
+    <th>Term</th>
+    <th>Year</th>
+    <th>Enroll start</th>
+    <th>Enroll end</th>
+    <th>Exam start</th>
+    <th>Exam end</th>
+  </tr>
+
+  </thead>
+  <tbody>
+  <!--/*@thymesVar id="te" type="com.example.demo.model.Term"*/-->
+  <tr th:each="te: ${terms}">
+    <td th:text="${te.termDate.term}">1</td>
+    <td th:text="${te.termDate.year}">1400</td>
+    <td th:text="${te.enrollStart}">2021-12-10</td>
+    <td th:text="${te.enrollEnd}">2021-12-10</td>
+    <td th:text="${te.examStart}">2021-12-10</td>
+    <td th:text="${te.examEnd}">2021-12-10</td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>

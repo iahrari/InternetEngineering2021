@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.TimeTableConflictException;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public void assignInstructor(String instructorUsername, Long courseId,
                                  TimeTable timeTable, Term term,
-                                 LocalDateTime examDate) {
+                                 Date examDate) {
         Instructor instructor = instructorRepository.findByUsername(instructorUsername)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
         Course course = courseRepository.findById(courseId)
@@ -96,6 +96,12 @@ public class AdminServiceImpl implements AdminService {
                 .timeTable(timeTable)
                 .term(term)
                 .build();
+
+        var conflict = instructor.getInstructorCourse().stream()
+                .filter(t -> t.getTimeTable().conflict(timeTable))
+                .findAny();
+        if (conflict.isPresent())
+            throw new TimeTableConflictException(conflict.get(), iCourse);
 
         instructorLessonRepository.save(iCourse);
     }
@@ -125,11 +131,44 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+
+    @Override
     public Term getTerm() {
-        var date = new Date();
-        return termRepository.findByEnrollStartBeforeAndExamEndAfter(date, date)
+        return termRepository.findFirstByOrderByEnrollEndDesc()
                 .orElse(Term.builder()
                         .termDate(Term.TermDate.builder().build())
                         .build());
+    }
+
+    @Override
+    public List<Instructor> getAllInstructors() {
+        return instructorRepository.findAll();
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    @Override
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
+    }
+
+    @Override
+    public List<InstructorCourse> getTermInstructorCourse(Term term) {
+        return instructorLessonRepository.findByTerm(term);
+    }
+
+    @Override
+    public List<InstructorCourse> getInstructorSpecialCourse(Term term, Long courseId) {
+        return instructorLessonRepository.findAllByCourseAndTerm(
+                courseRepository.findById(courseId)
+                        .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND)),
+                term
+        );
     }
 }

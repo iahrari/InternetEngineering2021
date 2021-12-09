@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" th:action="@{/admin/new-instructor}" th:object="${student}">
+<form method="post" th:action="@{/admin/students}" th:object="${student}">
     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
         <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
     </div><br>
@@ -20,5 +20,26 @@
     <input type="text" placeholder="National Id" th:field="*{nationalId}"><br>
     <button type="submit">Submit</button>
 </form>
+
+<table th:if="${!students.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Family Name</th>
+        <th>Username</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="stu" type="com.example.demo.model.Student"*/-->
+    <tr th:each="stu: ${students}">
+        <td th:text="${stu.id}">1</td>
+        <td th:text="${stu.name}">Mostafa</td>
+        <td th:text="${stu.family}">Nazari</td>
+        <td th:text="${stu.username}">mos</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

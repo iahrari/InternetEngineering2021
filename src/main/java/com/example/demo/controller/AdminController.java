@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.TimeTableConflictException;
 import com.example.demo.model.*;
-import com.example.demo.model.wrapper.Wrapper;
 import com.example.demo.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,63 +14,59 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@SessionAttributes("currentTerm")
 public class AdminController {
     private final AdminService service;
-
-    @ModelAttribute("currentTerm")
-    private Term currentTerm(){
-        return service.getTerm();
-    }
 
     @GetMapping
     public String homePage(){
         return "admin/home";
     }
 
-    @GetMapping("/new-term")
+    @GetMapping("/terms")
     public String newTerm(Model model){
+        model.addAttribute("terms", service.getAllTerms());
         model.addAttribute("term",
                 Term.builder().termDate(Term.TermDate.builder().build()).build());
         return "admin/newTerm";
     }
 
-    @GetMapping("/new-admin")
+    @GetMapping("/admins")
     public String adminForm(Model model){
+        model.addAttribute("admins", service.getAllAdmins());
         model.addAttribute("admin", Admin.builder().build());
         return "admin/adminForm";
     }
 
-    @GetMapping("/new-course")
+    @GetMapping("/courses")
     public String courseForm(Model model){
+        model.addAttribute("courses", service.getAllCourses());
         model.addAttribute("course", Course.builder().build());
         return "admin/courseForm";
     }
 
-    @GetMapping("/new-student")
+    @GetMapping("/students")
     public String studentForm(Model model){
+        model.addAttribute("students", service.getAllStudents());
         model.addAttribute("student", Student.builder().build());
         return "admin/newStudent";
     }
 
-    @GetMapping("/new-instructor")
+    @GetMapping("/instructors")
     public String instructorForm(Model model){
+        model.addAttribute("instructors", service.getAllInstructors());
         model.addAttribute("instructor", Instructor.builder().build());
         return "admin/newInstructorForm";
     }
 
     @GetMapping("/assign-course/{courseId}")
-    public String assignInstructor(Model model, @PathVariable String courseId){
+    public String assignInstructor(Model model, @PathVariable Long courseId, @ModelAttribute("currentTerm") Term term){
+        model.addAttribute("courseList", service.getInstructorSpecialCourse(term, courseId));
         model.addAttribute("courseId", courseId);
-        model.addAttribute("timeTable", TimeTable.builder().build());
-        model.addAttribute("terms", service.getAllTerms());
-        model.addAttribute("termDate", Term.TermDate.builder().build());
-        model.addAttribute("instructor", Instructor.builder().build());
-        model.addAttribute("examDate", new Wrapper());
+        model.addAttribute("assign", new AssignInstructorDTO());
         return "admin/instructor-assign";
     }
 
-    @PostMapping("/new-term")
+    @PostMapping("/terms")
     public String saveTerm(@ModelAttribute @Valid Term term, Errors errors){
         try {
             service.saveTerm(term);
@@ -81,10 +77,10 @@ public class AdminController {
             return "admin/newTerm";
         }
 
-        return "redirect:/admin";
+        return "redirect:/admin/terms";
     }
 
-    @PostMapping("/new-admin")
+    @PostMapping("/admins")
     public String newAdmin(@ModelAttribute @Valid Admin admin, Errors errors){
         if (errors.hasErrors())
             return "admin/adminForm";
@@ -95,18 +91,18 @@ public class AdminController {
             errors.rejectValue("username", "error.user.username", e.getMessage());
             return "admin/adminForm";
         }
-        return "redirect:/admin";
+        return "redirect:/admin/admins";
     }
 
-    @PostMapping("/new-course")
+    @PostMapping("/courses")
     public String saveCourse(@ModelAttribute @Valid Course course, Errors errors){
         if (errors.hasErrors())
             return "admin/courseForm";
         service.saveCourse(course);
-        return "redirect:/admin";
+        return "redirect:/admin/courses";
     }
 
-    @PostMapping("/new-student")
+    @PostMapping("/students")
     public String newStudent(@ModelAttribute @Valid Student student, Errors errors){
         if (errors.hasErrors())
             return "admin/newStudent";
@@ -118,10 +114,10 @@ public class AdminController {
             return "admin/newStudent";
         }
 
-        return "redirect:/admin";
+        return "redirect:/admin/students";
     }
 
-    @PostMapping("/new-instructor")
+    @PostMapping("/instructors")
     public String newInstructor(@ModelAttribute @Valid Instructor instructor, Errors errors){
         if (errors.hasErrors())
             return "admin/newInstructorForm";
@@ -133,18 +129,33 @@ public class AdminController {
             return "admin/newInstructorForm";
         }
 
-        return "redirect:/admin/";
+        return "redirect:/admin/instructors";
     }
 
     @PostMapping("/assign-course/{courseId}")
     public String saveAssignInstructor(@PathVariable Long courseId,
-                                       @ModelAttribute TimeTable timeTable,// Errors timeError,
-                                       @ModelAttribute Instructor instructor,// Errors insError,
-                                       @ModelAttribute Wrapper examDate){//, Errors dateError){
-//        if (timeError.hasErrors() || insError.hasErrors() || termError.hasErrors() || dateError.hasErrors())
-//            return "admin/instructor-assign";
-        service.assignInstructor(instructor.getUsername(), courseId,
-                timeTable, currentTerm(), examDate.getData());
+                                       @ModelAttribute("currentTerm") Term currentTerm,
+                                       @ModelAttribute("assign") @Valid AssignInstructorDTO assign,
+                                       Errors assignErrors){
+        if((assign.getExamDate().compareTo(currentTerm.getExamStart()) < 0)
+                || (assign.getExamDate().compareTo(currentTerm.getExamEnd()) > 0)){
+            assignErrors.rejectValue("examDate", "error.exam.date",
+                    "Date of exam should be in exam time");
+        }
+        if (assignErrors.hasErrors())
+            return "admin/instructor-assign";
+
+        try {
+            service.assignInstructor(assign.getInstructorId(), courseId,
+                    assign.getTimeTable(), currentTerm, assign.getExamDate());
+        } catch (TimeTableConflictException e){
+            assignErrors.rejectValue("saturday",
+                    "error.timeTable",
+                    "Instructor has a class at: " + e.getHave() +
+                            " but tried to assigned: " + e.getWanted()
+            );
+            return "admin/instructor-assign";
+        }
         return "redirect:/admin";
     }
 }

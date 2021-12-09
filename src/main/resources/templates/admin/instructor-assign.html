@@ -5,33 +5,50 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="post" th:action="@{/admin/assign-course/__${courseId}__}">
+    <form method="post" th:action="@{/admin/assign-course/__${courseId}__}" th:object="${assign}">
         <input type="number" min="1397" max="1500"
                th:placeholder="${currentTerm.termDate.year}"
-               th:field="${termDate.year}"
                placeholder="Year" disabled><br>
 
         <input type="number" max="1" min="0"
-               th:placeholder="${termDate.term}"
                th:value="${currentTerm.termDate.term}"
                placeholder="Term" disabled><br>
 
-        <input type="text" th:field="${instructor.username}" placeholder="Instructor Username"><br>
-        <input type="text" th:field="${timeTable.saturday}" placeholder="Saturday"><br>
-        <input type="text" th:field="${timeTable.sunday}" placeholder="sunday"><br>
-        <input type="text" th:field="${timeTable.monday}" placeholder="monday"><br>
-        <input type="text" th:field="${timeTable.tuesday}" placeholder="tuesday"><br>
-        <input type="text" th:field="${timeTable.wednesday}" placeholder="wednesday"><br>
-        <input type="text" th:field="${timeTable.thursday}" placeholder="thursday"><br><br>
+        <input type="text" th:field="${assign.instructorId}" placeholder="Instructor Username"><br>
+        <input type="text" th:field="${assign.saturday}" placeholder="Saturday"><br>
+        <input type="text" th:field="${assign.sunday}" placeholder="sunday"><br>
+        <input type="text" th:field="${assign.monday}" placeholder="monday"><br>
+        <input type="text" th:field="${assign.tuesday}" placeholder="tuesday"><br>
+        <input type="text" th:field="${assign.wednesday}" placeholder="wednesday"><br>
+        <input type="text" th:field="${assign.thursday}" placeholder="thursday"><br><br>
 
         <label for="examStart">Exam date: </label>
-        <input id="examStart" type="datetime-local"
-               th:min="${#dates.format(currentTerm.examStart, 'yyyy-MM-dd') + 'T'
-                            + #dates.format(currentTerm.examStart, 'HH:mm:ss')}"
-               th:max="${#dates.format(currentTerm.examEnd, 'yyyy-MM-dd') + 'T'
-                            + #dates.format(currentTerm.examEnd, 'HH:mm:ss')}"
-               th:field="${examDate.data}"/><br>
+        <input id="examStart" type="datetime-local" th:field="${assign.examDate}"/><br>
+<!--               th:min="${#dates.format(currentTerm.examStart, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examStart, 'HH:mm:ss')}"-->
+<!--               th:max="${#dates.format(currentTerm.examEnd, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examEnd, 'HH:mm:ss')}"-->
+
         <button type="submit">Submit</button>
     </form>
+
+    <table th:if="${!courseList.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Course name</th>
+            <th>Instructor username</th>
+            <th>Time table</th>
+            <th>Exam</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="te" type="com.example.demo.model.InstructorCourse"*/-->
+        <tr th:each="te: ${courseList}">
+            <td th:text="${te.course.name}">IE</td>
+            <td th:text="${te.instructor.getUsername()}">ins</td>
+            <td th:text="${te.timeTable}">2021-12-10</td>
+            <td th:text="${te.examDate}">2021-12-10</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>
