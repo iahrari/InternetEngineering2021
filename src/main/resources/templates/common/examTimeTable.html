@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Time Table</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>
+            Course
+        </th>
+        <th>
+            Instructor
+        </th>
+        <th>
+            Date
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="exam" type="com.example.demo.model.InstructorCourse"*/-->
+    <tr th:each="exam: ${exams}">
+        <td th:text="${exam.course.name}">IE</td>
+        <td th:text="${exam.instructor.name}">Professor Morteza Noferessti</td>
+        <td th:text="${exam.examDate}">2021/10/11 11:00:00 AM</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

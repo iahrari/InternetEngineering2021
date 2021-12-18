@@ -103,7 +103,9 @@ public class AdminServiceImpl implements AdminService {
         if (conflict.isPresent())
             throw new TimeTableConflictException(conflict.get(), iCourse);
 
-        instructorLessonRepository.save(iCourse);
+        var il = instructorLessonRepository.save(iCourse);
+        instructor.getInstructorCourse().add(il);
+        course.getInstructorCourse().add(il);
     }
 
     @Override

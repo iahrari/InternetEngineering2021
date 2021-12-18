@@ -29,7 +29,7 @@ public class StudentLesson {
     @Digits(integer = 2, fraction = 2)
     @Max(20)
     @Min(0)
-    private Float grade = 0f;
+    private Float grade = null;
 
     @Embeddable
     @Data

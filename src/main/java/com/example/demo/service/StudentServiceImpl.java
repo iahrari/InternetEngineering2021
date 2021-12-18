@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.TimeTableConflictException;
-import com.example.demo.model.Student;
-import com.example.demo.model.StudentLesson;
-import com.example.demo.model.InstructorCourse;
-import com.example.demo.model.Term;
+import com.example.demo.model.*;
 import com.example.demo.repository.StudentLessonRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.InstructorLessonRepository;
@@ -27,18 +24,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public StudentLesson selectUnit(InstructorCourse teacherCourse, Long studentId) {
+    public StudentLesson selectUnit(InstructorCourse.TCId teacherCourseId, Student student) {
+        var stu = studentRepository.findById(student.getId())
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        var teacherCourse = instructorLessonRepository.findById(teacherCourseId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
         StudentLesson.SLId id = StudentLesson.SLId.builder()
-                .studentId(studentId)
+                .studentId(student.getId())
                 .tcId(teacherCourse.getId())
                 .build();
 
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
-
-        Optional<StudentLesson> sl = student.getStudentLessons()
+        Optional<StudentLesson> sl = stu.getStudentLessons()
                 .stream().filter(l -> l.getInstructorCourse().getTerm().equals(teacherCourse.getTerm()) &&
                         l.getInstructorCourse().getTimeTable().conflict(teacherCourse.getTimeTable()))
+                .findAny();
+
+        Optional<StudentLesson> sl2 = stu.getStudentLessons().stream()
+                .filter(l -> l.getInstructorCourse().getExamDate()
+                        .equals(teacherCourse.getExamDate()))
                 .findAny();
 
         if (sl.isPresent())
@@ -47,13 +52,21 @@ public class StudentServiceImpl implements StudentService {
                     .wanted(teacherCourse)
                     .build();
 
-        return studentLessonRepository.save(
+        if (sl2.isPresent())
+            throw TimeTableConflictException.builder()
+                    .have(sl2.get().getInstructorCourse())
+                    .wanted(teacherCourse)
+                    .build();
+        var sLesson = studentLessonRepository.save(
                 StudentLesson.builder()
-                        .student(student)
+                        .student(stu)
                         .id(id)
                         .instructorCourse(teacherCourse)
-                        .build()
-        );
+                        .build());
+
+        stu.getStudentLessons().add(sLesson);
+        teacherCourse.getStudentLesson().add(sLesson);
+        return sLesson;
     }
 
     @Override
@@ -63,5 +76,31 @@ public class StudentServiceImpl implements StudentService {
                 .getStudentLessons()
                 .stream().filter(l -> l.getInstructorCourse().getTerm().equals(term))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InstructorCourse> getTermInstructorCourse(Term term, Student student) {
+        var stu = studentRepository.findById(student.getId())
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        return instructorLessonRepository.findByTerm(term)
+                .stream().filter(c -> stu.getStudentLessons().stream()
+                        .filter(sl -> c.getId().getCourseId()
+                                .equals(sl.getInstructorCourse().getCourse().getId()))
+                        .findAny().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public TimeTableDTO getTermTimeTableDTO(Term term, Student student) {
+        var stu = studentRepository.findById(student.getId())
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        return TimeTableDTO.convertFromTimeTables(
+                stu.getStudentLessons().stream()
+                        .map(StudentLesson::getInstructorCourse)
+                        .filter(c -> c.getTerm().equals(term))
+                        .collect(Collectors.toList())
+        );
     }
 }

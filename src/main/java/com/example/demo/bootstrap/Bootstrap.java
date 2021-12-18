@@ -33,9 +33,9 @@ public class Bootstrap {
             userRepository.save(admin);
 
             Calendar endEnroll = Calendar.getInstance();
-            endEnroll.add(Calendar.DAY_OF_YEAR, 3);
+            endEnroll.add(Calendar.MINUTE, 10);
             Calendar startExam = Calendar.getInstance();
-            startExam.add(Calendar.MONTH, 3);
+            startExam.add(Calendar.MINUTE, 15);
 
             Calendar endExam = Calendar.getInstance();
             endExam.add(Calendar.MONTH, 3);

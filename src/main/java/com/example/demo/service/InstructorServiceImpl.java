@@ -1,13 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Student;
-import com.example.demo.model.StudentLesson;
-import com.example.demo.model.InstructorCourse;
-import com.example.demo.model.Term;
-import com.example.demo.repository.InstructorRepository;
-import com.example.demo.repository.StudentLessonRepository;
-import com.example.demo.repository.StudentRepository;
-import com.example.demo.repository.InstructorLessonRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,16 +17,29 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorLessonRepository instructorLessonRepository;
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     @Transactional
-    public StudentLesson setGrade(Long studentId, Long courseId, float grade) {
-        Student student = studentRepository.findById(studentId)
+    public StudentLesson setGrade(Term term, Long instructorId, String studentUsername,
+                                  Long courseId, float grade) {
+        var student = studentRepository.findByUsername(studentUsername)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+        var id = InstructorCourse.TCId.builder()
+                .courseId(courseId)
+                .instructorId(instructorId)
+                .termDate(term.getTermDate())
+                .build();
+
+        var ic = instructorLessonRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
-        StudentLesson studentLesson = studentLessonRepository.findByStudent(student).stream().
-                filter(sl -> sl.getInstructorCourse().getCourse().getId().equals(courseId)).findAny()
+        StudentLesson studentLesson = ic.getStudentLesson().stream()
+                .filter(sl -> sl.getStudent().getId().equals(student.getId()))
+                .findAny()
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        studentLesson.setGrade(grade);
 
         return studentLessonRepository.save(studentLesson);
     }
@@ -51,5 +58,27 @@ public class InstructorServiceImpl implements InstructorService {
                         .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND)),
                 term
         );
+    }
+
+    @Override
+    public TimeTableDTO getTermTimeTableDTO(Term term, Long instructorId) {
+        return TimeTableDTO.convertFromTimeTables(
+                instructorLessonRepository.findByInstructorAndTerm(
+                        instructorRepository.findById(instructorId)
+                                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND)),
+                        term
+                )
+        );
+    }
+
+    @Override
+    public InstructorCourse getInstructorCourse(Long instructorId, Term term, Long courseId) {
+        return instructorLessonRepository.findByInstructorAndTermAndCourse(
+                instructorRepository.findById(instructorId)
+                        .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND)),
+                term,
+                courseRepository.findById(courseId)
+                        .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND))
+        ).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
     }
 }

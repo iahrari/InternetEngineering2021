@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
+@ToString(exclude = "instructorCourse")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

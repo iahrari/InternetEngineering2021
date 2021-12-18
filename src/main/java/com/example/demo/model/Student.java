@@ -19,7 +19,7 @@ public class Student extends User {
         super(username, name, family, password, nationalId);
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<StudentLesson> studentLessons = new ArrayList<>();
 
     @Override

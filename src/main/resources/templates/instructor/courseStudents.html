@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${students.course.name}">Internet Engineering</title>
+</head>
+<body>
+<h3 th:text="${students.course.name}">Internet Engineering</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Grade</th>
+        <th>Set grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student: ${students.getStudentLesson()}">
+        <td th:text="${student.student.name + ' ' + student.student.family}">Iman Ahrari</td>
+        <td th:text="${(student.grade == null)? 'Not defined': student.grade + ''}">15</td>
+        <td>
+            <a th:href="@{/instructor/courses/__${students.course.id}__/__${student.student.username}__}">
+                Set grade
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

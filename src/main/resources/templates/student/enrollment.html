@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Course name</th>
+        <th>Instructor</th>
+        <th>Time table</th>
+        <th>Exam date</th>
+        <th>Enroll</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="lesson" type="com.example.demo.model.InstructorCourse"*/-->
+        <tr th:each="lesson: ${lessonList}">
+            <td th:text="${lesson.course.name}">Internet Engineering</td>
+            <td th:text="${lesson.instructor}">Professor Morteza Noferesti</td>
+            <td th:object="${lesson.timeTable}">
+                <span th:if="*{saturday != null}" th:text="'Saturday: ' + *{saturday}"/>
+                <span th:if="*{sunday != null}" th:text="'Sunday: ' + *{sunday}"/>
+                <span th:if="*{monday != null}" th:text="'Monday: ' + *{monday}"/>
+                <span th:if="*{tuesday != null}" th:text="'Tuesday: ' + *{tuesday}"/>
+                <span th:if="*{wednesday != null}" th:text="'Wednesday: ' + *{wednesday}"/>
+                <span th:if="*{thursday != null}" th:text="'Thursday: ' + *{thursday}"/>
+            </td>
+            <td th:text="${lesson.examDate}">2021/12/12 14:12:12</td>
+            <td><a th:href="@{/student/enrollment/__${lesson.id.courseId}__/__${lesson.id.instructorId}__}">
+                <button type="submit">Enroll</button>
+            </a></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

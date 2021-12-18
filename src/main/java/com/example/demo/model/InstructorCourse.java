@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,7 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(exclude = {"timeTable", "instructor", "course"})
+@ToString(exclude = {"timeTable", "instructor", "course", "studentLesson"})
+@EqualsAndHashCode(exclude = {"timeTable", "instructor", "course", "studentLesson"})
 public class InstructorCourse {
     @EmbeddedId
     private TCId id;

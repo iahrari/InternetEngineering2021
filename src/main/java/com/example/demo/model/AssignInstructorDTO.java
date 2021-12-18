@@ -61,6 +61,7 @@ public class AssignInstructorDTO {
                 .saturday(saturday)
                 .sunday(sunday)
                 .monday(monday)
+                .tuesday(tuesday)
                 .thursday(tuesday)
                 .wednesday(wednesday)
                 .thursday(thursday)

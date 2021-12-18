@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.Date;
+
 @ControllerAdvice
 @RequiredArgsConstructor
 public class AdviceController {
@@ -15,5 +17,6 @@ public class AdviceController {
     public void getCurrentTerm(Model model){
         model.addAttribute("currentTerm",
                 adviceService.getCurrentTerm());
+        model.addAttribute("now", new Date());
     }
 }

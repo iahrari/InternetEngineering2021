@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.model.StudentLesson;
-import com.example.demo.model.InstructorCourse;
-import com.example.demo.model.Term;
+import com.example.demo.model.*;
 
 import java.util.List;
 
 public interface StudentService {
-    StudentLesson selectUnit(InstructorCourse instructorCourse, Long studentId);
+    StudentLesson selectUnit(InstructorCourse.TCId instructorCourse, Student student);
     List<StudentLesson> getLessons(Long studentId, Term term);
+    List<InstructorCourse> getTermInstructorCourse(Term term, Student student);
+    TimeTableDTO getTermTimeTableDTO(Term term, Student student);
 }

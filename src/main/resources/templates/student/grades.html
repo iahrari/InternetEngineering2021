@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Grades</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Course</th>
+        <th>Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="grade" type="com.example.demo.model.StudentLesson"*/-->
+    <tr th:each="grade: ${grades}" th:if="${grade.grade != null}">
+        <td th:text="${grade.instructorCourse.course.name}">IE</td>
+        <td th:text="${grade.grade}">16.45</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

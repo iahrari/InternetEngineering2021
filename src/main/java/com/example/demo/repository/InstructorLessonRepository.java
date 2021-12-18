@@ -7,6 +7,7 @@ import com.example.demo.model.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InstructorLessonRepository
         extends JpaRepository<InstructorCourse, InstructorCourse.TCId> {
@@ -14,4 +15,5 @@ public interface InstructorLessonRepository
     List<InstructorCourse> findByInstructorAndTerm(Instructor instructor, Term term);
     List<InstructorCourse> findByTerm(Term term);
     List<InstructorCourse> findAllByCourseAndTerm(Course course, Term term);
+    Optional<InstructorCourse> findByInstructorAndTermAndCourse(Instructor instructor, Term term, Course course);
 }
