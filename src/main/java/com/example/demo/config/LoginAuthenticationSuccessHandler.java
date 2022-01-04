@@ -39,9 +39,7 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session == null) {
-            return;
-        }
+        if (session == null) return;
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
 }

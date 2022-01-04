@@ -1,35 +1,47 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'ثبت دوره جدید')}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<form method="post" th:action="@{/admin/courses}" th:object="${course}">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-    </div><br>
-    <input type="text" th:field="*{name}">
-    <button type="submit">Submit</button>
-</form>
 
-<table th:if="${!courses.isEmpty()}">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Term's detail</th>
-    </tr>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header">ثبت دوره</h3>
+            <hr class="table_header_hr">
+        </div>
+        <form method="post" th:action="@{/admin/courses}" th:object="${course}" class="admin_form">
+            <div class="isa_error" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err: ${#fields.allErrors()}" th:text="${err}">Error!</li>
+                </ul>
+            </div>
+            <input type="text" th:field="*{name}" class="admin_form_input" placeholder="نام درس">
+            <button type="submit" class="inst_form_btn">ثبت</button>
+        </form>
+        <table th:if="${!courses.isEmpty()}" class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">شناسه</th>
+                    <th class="table_title">نام</th>
+                     <th class="table_title">جزییات درس</th>
+                </tr>
 
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="course" type="com.example.demo.model.Course"*/-->
-    <tr th:each="course: ${courses}">
-        <td th:text="${course.id}">1</td>
-        <td th:text="${course.name}">Internet Engineering</td>
-        <td><a th:href="@{/admin/assign-course/__${course.id}__}">detail</a></td>
-    </tr>
-    </tbody>
-</table>
-
+            </thead>
+            <tbody>
+                <!--/*@thymesVar id="course" type="com.example.demo.model.Course"*/-->
+                <tr th:each="course: ${courses}" class="quiz_table_values">
+                    <td th:text="${course.id}" class="quiz_table_index">1</td>
+                    <td th:text="${course.name}" class="quiz_table_index">Internet Engineering</td>
+                    <td><a th:href="@{/admin/assign-course/__${course.id}__}" class="quiz_table_index">جزییات</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

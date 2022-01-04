@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.TimeTableConflictException;
 import com.example.demo.model.InstructorCourse;
 import com.example.demo.model.Student;
 import com.example.demo.model.StudentLesson;
@@ -23,7 +24,7 @@ public class StudentController {
 
     @GetMapping
     public String home(){
-        return "student/home";
+        return "common/home";
     }
 
     @GetMapping("/enrollment")
@@ -32,12 +33,12 @@ public class StudentController {
                              @ModelAttribute("currentTerm") Term term,
                              @ModelAttribute("now") Date now){
         if(term.getEnrollStart().compareTo(now) > 0
-                && term.getEnrollEnd().compareTo(now) < 0) {
-            model.addAttribute("type", "Enrollment");
+                || term.getEnrollEnd().compareTo(now) < 0) {
+            model.addAttribute("type", "انتخاب واحد");
             return "common/NotStarted";
         }
         model.addAttribute("lessonList", service.getTermInstructorCourse(term, student));
-        model.addAttribute("id", InstructorCourse.TCId.builder().build());
+        model.addAttribute("err", null);
         return "student/enrollment";
     }
 
@@ -49,17 +50,26 @@ public class StudentController {
                          @ModelAttribute("now") Date now,
                          Model model){
         if(term.getEnrollStart().compareTo(now) > 0
-                && term.getEnrollEnd().compareTo(now) < 0) {
-            model.addAttribute("type", "Enrollment");
+                || term.getEnrollEnd().compareTo(now) < 0) {
+            model.addAttribute("type", "انتخاب واحد");
             return "common/NotStarted";
         }
-        service.selectUnit(
-                InstructorCourse.TCId.builder()
-                        .courseId(courseId)
-                        .instructorId(instructorId)
-                        .termDate(term.getTermDate())
-                        .build(),
-                student);
+        try {
+            service.selectUnit(
+                    InstructorCourse.TCId.builder()
+                            .courseId(courseId)
+                            .instructorId(instructorId)
+                            .termDate(term.getTermDate())
+                            .build(),
+                    student);
+        } catch (TimeTableConflictException e){
+            var a = "کلاس " + e.getHave().getCourse().getName() +
+                    " با " + e.getWanted().getCourse().getName() + " تداخل دارد";
+            model.addAttribute("err", a);
+            model.addAttribute("lessonList", service.getTermInstructorCourse(term, student));
+//            model.addAttribute("id", InstructorCourse.TCId.builder().build());
+            return "student/enrollment";
+        }
         return "redirect:/student/enrollment";
     }
 
@@ -91,7 +101,7 @@ public class StudentController {
                          @ModelAttribute("now") Date now,
                          Model model){
         if(term.getExamStart().compareTo(now) > 0) {
-            model.addAttribute("type", "Exams");
+            model.addAttribute("type", "امتحانات");
             return "common/NotStarted";
         }
 

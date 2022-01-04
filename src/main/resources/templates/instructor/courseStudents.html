@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, ${'لیست دانش آموزان درس ' + students.course.name})}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${students.course.name}">Internet Engineering</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<h3 th:text="${students.course.name}">Internet Engineering</h3>
-<table>
-    <thead>
-    <tr>
-        <th>Student</th>
-        <th>Grade</th>
-        <th>Set grade</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="student: ${students.getStudentLesson()}">
-        <td th:text="${student.student.name + ' ' + student.student.family}">Iman Ahrari</td>
-        <td th:text="${(student.grade == null)? 'Not defined': student.grade + ''}">15</td>
-        <td>
-            <a th:href="@{/instructor/courses/__${students.course.id}__/__${student.student.username}__}">
-                Set grade
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header" th:text="${'لیست دانش آموزان درس ' + students.course.name}">
+                لیست دانش آموزان درس
+            </h3>
+            <hr class="table_header_hr">
+        </div> 
+        <table class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">نام دانشجو</th>
+                    <th class="table_title">نمره</th>
+                     <th class="table_title">ثبت نمره</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student: ${students.getStudentLesson()}" class="quiz_table_values">
+                    <td th:text="${student.student.name + ' ' + student.student.family}"  class="quiz_table_index">Iman Ahrari</td>
+                    <td th:text="${(student.grade == null)? '-': student.grade + ''}"  class="quiz_table_index">15</td>
+                    <td>
+                        <a th:href="@{/instructor/courses/__${students.course.id}__/__${student.student.username}__}"  class="quiz_table_btn">
+                            نمره‌دهی
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

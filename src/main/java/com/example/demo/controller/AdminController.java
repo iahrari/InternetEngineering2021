@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.exception.TimeTableConflictException;
 import com.example.demo.model.*;
 import com.example.demo.service.AdminService;
@@ -19,7 +20,7 @@ public class AdminController {
 
     @GetMapping
     public String homePage(){
-        return "admin/home";
+        return "common/home";
     }
 
     @GetMapping("/terms")
@@ -29,7 +30,7 @@ public class AdminController {
                 Term.builder().termDate(Term.TermDate.builder().build()).build());
         return "admin/newTerm";
     }
-
+//admin/admins
     @GetMapping("/admins")
     public String adminForm(Model model){
         model.addAttribute("admins", service.getAllAdmins());
@@ -67,13 +68,15 @@ public class AdminController {
     }
 
     @PostMapping("/terms")
-    public String saveTerm(@ModelAttribute @Valid Term term, Errors errors){
+    public String saveTerm(@ModelAttribute @Valid Term term,
+                           Errors errors, Model model){
         try {
             service.saveTerm(term);
         } catch (RuntimeException e){
             errors.rejectValue("enrollStart",
                     "error.term.conflict",
                     "There's a conflict with a term: " + e.getMessage());
+            model.addAttribute("terms", service.getAllTerms());
             return "admin/newTerm";
         }
 
@@ -81,13 +84,17 @@ public class AdminController {
     }
 
     @PostMapping("/admins")
-    public String newAdmin(@ModelAttribute @Valid Admin admin, Errors errors){
-        if (errors.hasErrors())
+    public String newAdmin(@ModelAttribute @Valid Admin admin,
+                           Errors errors, Model model){
+        if (errors.hasErrors()) {
+            model.addAttribute("admins", service.getAllAdmins());
             return "admin/adminForm";
+        }
 
         try {
             service.newAdmin(admin);
         } catch (RuntimeException e){
+            model.addAttribute("admins", service.getAllAdmins());
             errors.rejectValue("username", "error.user.username", e.getMessage());
             return "admin/adminForm";
         }
@@ -95,17 +102,23 @@ public class AdminController {
     }
 
     @PostMapping("/courses")
-    public String saveCourse(@ModelAttribute @Valid Course course, Errors errors){
-        if (errors.hasErrors())
+    public String saveCourse(@ModelAttribute @Valid Course course,
+                             Errors errors, Model model){
+        if (errors.hasErrors()) {
+            model.addAttribute("courses", service.getAllCourses());
             return "admin/courseForm";
+        }
         service.saveCourse(course);
         return "redirect:/admin/courses";
     }
 
     @PostMapping("/students")
-    public String newStudent(@ModelAttribute @Valid Student student, Errors errors){
-        if (errors.hasErrors())
+    public String newStudent(@ModelAttribute @Valid Student student,
+                             Errors errors, Model model){
+        if (errors.hasErrors()) {
+            model.addAttribute("students", service.getAllStudents());
             return "admin/newStudent";
+        }
 
         try {
             service.newStudent(student);
@@ -118,14 +131,20 @@ public class AdminController {
     }
 
     @PostMapping("/instructors")
-    public String newInstructor(@ModelAttribute @Valid Instructor instructor, Errors errors){
-        if (errors.hasErrors())
+    public String newInstructor(@ModelAttribute @Valid Instructor instructor,
+                                Errors errors,
+                                Model model){
+        if (errors.hasErrors()) {
+            model.addAttribute("instructors", service.getAllInstructors());
             return "admin/newInstructorForm";
+        }
 
         try {
             service.newInstructor(instructor);
         } catch (RuntimeException e){
-            errors.rejectValue("username", "error.user.username", e.getMessage());
+            errors.rejectValue("username",
+                    "error.user.username", e.getMessage());
+            model.addAttribute("instructors", service.getAllInstructors());
             return "admin/newInstructorForm";
         }
 
@@ -136,26 +155,35 @@ public class AdminController {
     public String saveAssignInstructor(@PathVariable Long courseId,
                                        @ModelAttribute("currentTerm") Term currentTerm,
                                        @ModelAttribute("assign") @Valid AssignInstructorDTO assign,
-                                       Errors assignErrors){
-        if((assign.getExamDate().compareTo(currentTerm.getExamStart()) < 0)
-                || (assign.getExamDate().compareTo(currentTerm.getExamEnd()) > 0)){
+                                       Errors assignErrors,
+                                       Model model){
+        if(assign.getExamDate() != null
+                && ((assign.getExamDate().compareTo(currentTerm.getExamStart()) < 0)
+                || (assign.getExamDate().compareTo(currentTerm.getExamEnd()) > 0))){
             assignErrors.rejectValue("examDate", "error.exam.date",
                     "Date of exam should be in exam time");
         }
-        if (assignErrors.hasErrors())
+        if (assignErrors.hasErrors()) {
+            model.addAttribute("courseList", service.getInstructorSpecialCourse(currentTerm, courseId));
             return "admin/instructor-assign";
+        }
 
         try {
             service.assignInstructor(assign.getInstructorId(), courseId,
                     assign.getTimeTable(), currentTerm, assign.getExamDate());
         } catch (TimeTableConflictException e){
+            model.addAttribute("courseList", service.getInstructorSpecialCourse(currentTerm, courseId));
             assignErrors.rejectValue("saturday",
                     "error.timeTable",
-                    "Instructor has a class at: " + e.getHave() +
-                            " but tried to assigned: " + e.getWanted()
+                    "کلاس " + e.getHave().getCourse().getName() +
+                            " با " + e.getWanted().getCourse().getName() + " تداخل دارد"
             );
             return "admin/instructor-assign";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("courseList", service.getInstructorSpecialCourse(currentTerm, courseId));
+            assignErrors.rejectValue("instructorId", e.getInstructorId() + " پیدا نشد.");
+            return "admin/instructor-assign";
         }
-        return "redirect:/admin";
+        return "redirect:/admin/assign-course/" + courseId;
     }
 }

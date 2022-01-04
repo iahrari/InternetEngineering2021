@@ -1,45 +1,65 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'ثبت استاد جدید')}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<form method="post" th:action="@{/admin/instructors}" th:object="${instructor}">
-    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-    </div><br>
-    <p th:if="${#fields.hasErrors('username')}" th:text="${'username ' + #fields.errors('username')}"/>
-    <input type="text" th:field="*{username}" placeholder="username"/> <br>
-    <p th:if="${#fields.hasErrors('password')}" th:text="${'Password: ' + #fields.errors('password')}"/>
-    <input type="password" placeholder="Password" th:field="*{password}"><br>
-    <p th:if="${#fields.hasErrors('name')}" th:text="${'Name: ' + #fields.errors('name')}"/>
-    <input type="text" placeholder="Name" th:field="*{name}"><br>
-    <p th:if="${#fields.hasErrors('family')}" th:text="${'Family name: ' + #fields.errors('family')}"/>
-    <input type="text" placeholder="Family Name" th:field="*{family}"><br>
-    <p th:if="${#fields.hasErrors('nationalId')}" th:text="${'nationalId: ' + #fields.errors('nationalId')}"/>
-    <input type="text" placeholder="National Id" th:field="*{nationalId}"><br>
-    <button type="submit">Submit</button>
-</form>
 
-<table th:if="${!instructors.isEmpty()}">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Family Name</th>
-        <th>Username</th>
-    </tr>
+<body class="send_container_to_center">
+<div style="width: auto;">
+    <div>
+        <div>
+            <h3 class="table_header">ثبت استاد</h3>
+            <hr class="table_header_hr">
+        </div>
+        <form method="post" th:action="@{/admin/instructors}" th:object="${instructor}" class="admin_form">
+            <div class="isa_error" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err: ${#fields.allErrors()}" th:text="${err}">Error!</li>
+                </ul>
+            </div>
+            <label for="username" class="admin_form_lable">شناسه کاربری :</label><br>
+            <input type="text" th:field="*{username}" placeholder="شناسه کاربری" class="admin_form_input"/> <br>
+            <label for="password" class="admin_form_lable">رمزعبور :</label><br>
+            <input type="password" placeholder="رمزعبور" th:field="*{password}" class="admin_form_input"><br>
+            <label for="Name" class="admin_form_lable">نام :</label><br>
+            <input type="text" placeholder="نام" th:field="*{name}" class="admin_form_input"><br>
+            <label for="Family Name" class="admin_form_lable">نام خانوادگی :</label><br>
+            <input type="text" placeholder="نام خانوادگی" th:field="*{family}" class="admin_form_input"><br>
+            <label for="National Id" class="admin_form_lable">کد ملی :</label><br>
+            <input type="text" placeholder="کدملی" th:field="*{nationalId}" class="admin_form_input"><br>
+            <button type="submit" class="admin_form_btn">ثبت</button>
+        </form>
+        <div>
+            <h3 class="table_header">لیست اساتید</h3>
+            <hr class="table_header_hr">
+        </div>
 
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="ins" type="com.example.demo.model.Instructor"*/-->
-    <tr th:each="ins: ${instructors}">
-        <td th:text="${ins.id}">1</td>
-        <td th:text="${ins.name}">Ali</td>
-        <td th:text="${ins.family}">Abodlahi</td>
-        <td th:text="${ins.username}">ali</td>
-    </tr>
-    </tbody>
-</table>
+        <table class="quiz_table">
+            <thead>
+            <tr>
+                <th class="table_title">شناسه</th>
+                <th class="table_title">نام</th>
+                <th class="table_title">نام خانوادگی</th>
+                <th class="table_title">نام کاربری</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <!--/*@thymesVar id="ins" type="com.example.demo.model.Instructor"*/-->
+            <tr th:each="ins: ${instructors}" class="quiz_table_values">
+                <td th:text="${ins.username}" class="quiz_table_index">1</td>
+                <td th:text="${ins.name}" class="quiz_table_index">علی</td>
+                <td th:text="${ins.family}" class="quiz_table_index">عبدالهی</td>
+                <td th:text="${ins.username}" class="quiz_table_index">ali</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
+
 </html>

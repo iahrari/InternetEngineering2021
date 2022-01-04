@@ -12,9 +12,9 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GradeWrapper {
-    @Digits(integer = 2, fraction = 2)
-    @Max(20)
-    @Min(0)
+    @Digits(integer = 2, fraction = 2, message = "نمره باید از ۰ تا ۲۰ باشد و نهایتا دو رقم اعشار باشد")
+    @Max(value = 20, message = "نمره باید از ۰ تا ۲۰ باشد")
+    @Min(value = 0, message = "نمره باید از ۰ تا ۲۰ باشد")
     private Float grade = null;
 
 }

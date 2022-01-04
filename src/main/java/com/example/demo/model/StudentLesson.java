@@ -26,9 +26,10 @@ public class StudentLesson {
     @MapsId("studentId")
     private Student student;
 
-    @Digits(integer = 2, fraction = 2)
-    @Max(20)
-    @Min(0)
+    @Digits(integer = 2, fraction = 2, message = "نمره باید از ۰ تا ۲۰ باشد و نهایتا دو رقم اعشار باشد")
+    @Max(value = 20, message = "نمره باید از ۰ تا ۲۰ باشد")
+    @Min(value = 0, message = "نمره باید از ۰ تا ۲۰ باشد")
+    @Builder.Default
     private Float grade = null;
 
     @Embeddable

@@ -1,24 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'نمرات')}">
 <head>
     <meta charset="UTF-8">
     <title>Grades</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<table>
-    <thead>
-    <tr>
-        <th>Course</th>
-        <th>Grade</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="grade" type="com.example.demo.model.StudentLesson"*/-->
-    <tr th:each="grade: ${grades}" th:if="${grade.grade != null}">
-        <td th:text="${grade.instructorCourse.course.name}">IE</td>
-        <td th:text="${grade.grade}">16.45</td>
-    </tr>
-    </tbody>
-</table>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header">نمرات</h3>
+            <hr class="table_header_hr">
+        </div>
+        <table class="program_content">
+            <thead>
+            <tr>
+                <th class="table_title">نام درس</th>
+                <th class="table_title">استاد</th>
+                <th class="table_title">نمره</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--/*@thymesVar id="grade" type="com.example.demo.model.StudentLesson"*/-->
+                <div>
+                    <tr th:each="grade: ${grades}" th:if="${grade.grade != null}"
+                        class="test">
+                        <td th:text="${grade.instructorCourse.course.name}">IE</td>
+                        <td th:text="${grade.instructorCourse.instructor.name}">IE</td>
+                        <td th:text="${grade.grade}">16.45</td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

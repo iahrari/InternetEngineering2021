@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, ${type + ' not started'})}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${type + ' not started'}"></title>
+    <title th:text="${type + ' هنوز شروع نشده‌است.'}"></title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
 <body>
-    <h1 th:text="${type + ' not started'}"></h1>
+    <h1 th:text="${'بازه ' + type + ' هنوز شروع نشده‌است.'}" class="table_header"> up</h1>
 </body>
 </html>

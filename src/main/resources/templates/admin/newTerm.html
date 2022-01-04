@@ -1,55 +1,73 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'ثبت ترم جدید')}">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<form method="post" th:action="@{/admin/terms}" th:object="${term}">
-  <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-  </div><br>
-  <input type="number" max="1" min="0" placeholder="Term" th:field="*{termDate.term}"/><br>
-  <input type="number" min="1397" max="1500" placeholder="Year" th:field="*{termDate.year}">
-  <br><br>
-  <span th:if="${#fields.hasErrors('enrollStart')}">
-    <ul>
-      <li th:each="err : ${#fields.errors('enrollStart')}" th:text="${err}"></li>
-    </ul>
-  </span>
-  <label for="enrollStart">Enroll start:</label>
-  <input id="enrollStart" type="date" th:field="*{enrollStart}" placeholder="yyyy-MM-dd"/><br>
-  <label for="enrollEnd">Enroll End:</label>
-  <input id="enrollEnd" type="date" th:field="*{enrollEnd}" placeholder="yyyy-MM-dd"/><br><br>
-  <label for="examStart">Exam start: </label>
-  <input id="examStart" type="date" th:field="*{examStart}" placeholder="yyyy-MM-dd"/><br>
-  <label for="examEnd">Exam End: </label>
-  <input id="examEnd" type="date" th:field="*{examEnd}" placeholder="yyyy-MM-dd"/><br>
-  <button type="submit">Submit</button>
-</form>
 
-<table th:if="${!terms.isEmpty()}">
-  <thead>
-  <tr>
-    <th>Term</th>
-    <th>Year</th>
-    <th>Enroll start</th>
-    <th>Enroll end</th>
-    <th>Exam start</th>
-    <th>Exam end</th>
-  </tr>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header">ثبت ترم</h3>
+            <hr class="table_header_hr">
+        </div>
+        <form method="post" th:action="@{/admin/terms}" th:object="${term}" class="grade_form">
+            <div class="isa_error" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err: ${#fields.allErrors()}" th:text="${err}">Error!</li>
+                </ul>
+            </div>
+            <input type="number" max="1" min="0" placeholder="ترم" th:field="*{termDate.term}"  class="inst_form_input" style="margin-top:0px;"/><br>
+            <input type="number" min="1397" max="1500" placeholder="سال" th:field="*{termDate.year}" class="inst_form_input">
+            <br><br>
+            <!-- <span th:if="${#fields.hasErrors('enrollStart')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('enrollStart')}" th:text="${err}"></li>
+                </ul>
+            </span> -->
+            <label for="enrollStart" >شروع انتخاب واحد:</label><br>
+            <input id="enrollStart" type="date" th:field="*{enrollStart}" placeholder="yyyy-MM-dd"  class="inst_form_input" style=" margin-top: 10px;margin-bottom: 10px;"/><br>
+            <label for="enrollEnd">پایان انتخاب واحد:</label><br>
+            <input id="enrollEnd" type="date" th:field="*{enrollEnd}" placeholder="yyyy-MM-dd" class="inst_form_input"  style=" margin-top: 10px;margin-bottom: 10px;"/><br><br>
+            <!-- <hr class="table_header_hr"> -->
+            <label for="examStart">شروع امتحانات: </label><br>
+            <input id="examStart" type="date" th:field="*{examStart}" placeholder="yyyy-MM-dd" class="inst_form_input"  style=" margin-top: 10px;margin-bottom: 10px;"/><br>
+            <label for="examEnd">پایان امتحانات: </label><br>
+            <input id="examEnd" type="date" th:field="*{examEnd}" placeholder="yyyy-MM-dd" class="inst_form_input"  style=" margin-top: 10px;margin-bottom: 10px;"/><br>
+            <button type="submit" class="inst_form_btn">تایید</button>
+        </form>
+        <div>
+            <h3 class="table_header">لیست ترم ها</h3>
+            <hr class="table_header_hr">
+        </div>
+        <table th:if="${!terms.isEmpty()}" class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">ترم</th>
+                    <th class="table_title">سال</th>
+                    <th class="table_title">شروع انتخاب واحد</th>
+                    <th class="table_title">پایان انتخاب واحد</th>
+                    <th class="table_title">شروع امتحانات</th>
+                    <th class="table_title">پایان امتحانات</th>
+                </tr>
 
-  </thead>
-  <tbody>
-  <!--/*@thymesVar id="te" type="com.example.demo.model.Term"*/-->
-  <tr th:each="te: ${terms}">
-    <td th:text="${te.termDate.term}">1</td>
-    <td th:text="${te.termDate.year}">1400</td>
-    <td th:text="${te.enrollStart}">2021-12-10</td>
-    <td th:text="${te.enrollEnd}">2021-12-10</td>
-    <td th:text="${te.examStart}">2021-12-10</td>
-    <td th:text="${te.examEnd}">2021-12-10</td>
-  </tr>
-  </tbody>
-</table>
+            </thead>
+            <tbody>
+                <!--/*@thymesVar id="te" type="com.example.demo.model.Term"*/-->
+                <tr th:each="te: ${terms}" class="quiz_table_values">
+                    <td th:text="${te.termDate.term}" class="quiz_table_indexs">1</td>
+                    <td th:text="${te.termDate.year}" class="quiz_table_indexs">1400</td>
+                    <td th:text="${te.enrollStart}" class="quiz_table_indexs">2021-12-10</td>
+                    <td th:text="${te.enrollEnd}" class="quiz_table_indexs">2021-12-10</td>
+                    <td th:text="${te.examStart}" class="quiz_table_indexs">2021-12-10</td>
+                    <td th:text="${te.examEnd}" class="quiz_table_indexs">2021-12-10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

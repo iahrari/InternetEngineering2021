@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, ${'ثبت نمره برای ' + studentUsername})}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${course.name}">Internet Engineering</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+            th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<h3 th:text="${course.name}">Internet Engineering</h3>
-<h4 th:text="${'Set grade for ' + studentUsername}">Set grade for 9712325001</h4>
-<form method="post"
-      th:action="@{/instructor/courses/__${course.id}__/__${studentUsername}__}"
-      th:object="${grade}">
-    <label for="grade">Grade: </label>
-    <input type="number" th:field="*{grade}" id="grade">
-    <button type="submit">Submit</button>
-</form>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header" th:text="${'ثبت نمره برای ' + studentUsername}">ثبت نمره برای 9712325001</h3>
+            <hr class="table_header_hr">
+        </div> 
+        <form method="post"
+              th:action="@{/instructor/courses/__${course.id}__/__${studentUsername}__}"
+              th:object="${grade}" class="grade_form">
+            <div class="isa_error" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err: ${#fields.allErrors()}" th:text="${err}">Error!</li>
+                </ul>
+            </div>
+            <input type="number" th:field="*{grade}" id="grade" class="grade_form_input">
+            <br>
+            <button type="submit" class="grade_form_btn">ثبت</button>
+            <button type="submit"  class="grade_form_btn">بازگشت</button>
+        </form>
+    </div>
 </body>
 </html>

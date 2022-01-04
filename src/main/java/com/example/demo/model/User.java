@@ -18,20 +18,20 @@ public abstract class User implements UserDetails {
     private Long id;
 
     @NaturalId
-    @NotBlank
+    @NotBlank(message = "شناسه کاربر نمی‌تواند خالی باشد")
     @Column(unique = true)
     private String username;
 
     @NaturalId
-    @NotBlank
+    @NotBlank(message = "کد ملی نمی‌تواند خالی باشد")
     @Column(unique = true)
     private String nationalId;
 
-    @NotBlank
+    @NotBlank(message = "نام نمی‌تواند خالی باشد")
     private String name;
-    @NotBlank
+    @NotBlank(message = "نام خانوادگی نمی‌تواند خالی باشد")
     private String family;
-    @NotBlank
+    @NotBlank(message = "رمز عبور نمی‌تواند خالی باشد")
     private String password;
 
     public User(String username, String name, String family, String password, String nationalId) {

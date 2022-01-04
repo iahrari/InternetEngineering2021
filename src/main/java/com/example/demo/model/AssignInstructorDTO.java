@@ -11,7 +11,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,41 +18,41 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssignInstructorDTO {
-    @NotBlank
-    @NotNull
+    @NotBlank(message = "شناسه کاربری استاد نمی‌تواند خالی باشد")
     private String instructorId;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short saturday;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short sunday;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short monday;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short tuesday;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short wednesday;
 
-    @Min(8)
-    @Max(18)
-    @IsEven
+    @Min(value = 8, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @Max(value = 18, message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
+    @IsEven(message = "ساعت کلاس باید از ۸ تا ۲۰ و زوج باشد")
     private Short thursday;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @NotNull(message = "تاریخ امتحان نمی‌تواند خالی باشد.")
     private Date examDate;
 
     public TimeTable getTimeTable(){

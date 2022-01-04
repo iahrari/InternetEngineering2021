@@ -1,258 +1,267 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'برنامه درسی')}">
 <head>
     <meta charset="UTF-8">
     <title>Course Time table</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<table>
+<body  class="send_container_to_center">
+<div style="width:auto;">
+<div>
+      <h3 class="table_header">برنامه درسی</h3>
+      <hr class="table_header_hr">
+</div>
+<table style="border-spacing: 22px;">
     <thead>
     <tr>
-        <th>Week Day</th>
-        <th>8</th>
-        <th>10</th>
-        <th>12</th>
-        <th>14</th>
-        <th>16</th>
-        <th>18</th>
+        <th class="table_title">روز هفته</th>
+        <th class="table_title">8</th>
+        <th class="table_title">10</th>
+        <th class="table_title">12</th>
+        <th class="table_title">14</th>
+        <th class="table_title">16</th>
+        <th class="table_title">18</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>Saturday</td>
-        <td th:object="${timeTable.saturday[0]}">
+        <td class="table_title">شنبه</td>
+        <td  class="program_content" th:object="${timeTable.saturday[0]}">
             <span th:if="${timeTable.saturday[0] != null}"
-                  th:text="${timeTable.saturday[0].course.name}">IE</span>
+                  th:text="${timeTable.saturday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[0] != null}"
-                  th:text="${timeTable.saturday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.saturday[1]}">
+        <td  class="program_content" th:object="${timeTable.saturday[1]}">
             <span th:if="${timeTable.saturday[1] != null}"
-                  th:text="${timeTable.saturday[1].course.name}">IE</span>
+                  th:text="${timeTable.saturday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[1] != null}"
-                  th:text="${timeTable.saturday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.saturday[2]}">
+        <td  class="program_content" th:object="${timeTable.saturday[2]}">
             <span th:if="${timeTable.saturday[2] != null}"
-                  th:text="${timeTable.saturday[2].course.name}">IE</span>
+                  th:text="${timeTable.saturday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[2] != null}"
-                  th:text="${timeTable.saturday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.saturday[3]}">
+        <td  class="program_content" th:object="${timeTable.saturday[3]}">
             <span th:if="${timeTable.saturday[3] != null}"
-                  th:text="${timeTable.saturday[3].course.name}">IE</span>
+                  th:text="${timeTable.saturday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[3] != null}"
-                  th:text="${timeTable.saturday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.saturday[4]}">
+        <td  class="program_content" th:object="${timeTable.saturday[4]}">
             <span th:if="${timeTable.saturday[4] != null}"
-                  th:text="${timeTable.saturday[4].course.name}">IE</span>
+                  th:text="${timeTable.saturday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[4] != null}"
-                  th:text="${timeTable.saturday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.saturday[5]}">
+        <td  class="program_content" th:object="${timeTable.saturday[5]}">
             <span th:if="${timeTable.saturday[5] != null}"
-                  th:text="${timeTable.saturday[5].course.name}">IE</span>
+                  th:text="${timeTable.saturday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.saturday[5] != null}"
-                  th:text="${timeTable.saturday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.saturday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     <tr>
-        <td>Sunday</td>
-        <td th:object="${timeTable.sunday[0]}">
+        <td class="table_title">یک‌شنبه</td>
+        <td  class="program_content" th:object="${timeTable.sunday[0]}">
             <span th:if="${timeTable.sunday[0] != null}"
-                  th:text="${timeTable.sunday[0].course.name}">IE</span>
+                  th:text="${timeTable.sunday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[0] != null}"
-                  th:text="${timeTable.sunday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.sunday[1]}">
+        <td  class="program_content" th:object="${timeTable.sunday[1]}">
             <span th:if="${timeTable.sunday[1] != null}"
-                  th:text="${timeTable.sunday[1].course.name}">IE</span>
+                  th:text="${timeTable.sunday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[1] != null}"
-                  th:text="${timeTable.sunday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.sunday[2]}">
+        <td  class="program_content" th:object="${timeTable.sunday[2]}">
             <span th:if="${timeTable.sunday[2] != null}"
-                  th:text="${timeTable.sunday[2].course.name}">IE</span>
+                  th:text="${timeTable.sunday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[2] != null}"
-                  th:text="${timeTable.sunday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.sunday[3]}">
+        <td  class="program_content" th:object="${timeTable.sunday[3]}">
             <span th:if="${timeTable.sunday[3] != null}"
-                  th:text="${timeTable.sunday[3].course.name}">IE</span>
+                  th:text="${timeTable.sunday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[3] != null}"
-                  th:text="${timeTable.sunday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.sunday[4]}">
+        <td  class="program_content" th:object="${timeTable.sunday[4]}">
             <span th:if="${timeTable.sunday[4] != null}"
-                  th:text="${timeTable.sunday[4].course.name}">IE</span>
+                  th:text="${timeTable.sunday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[4] != null}"
-                  th:text="${timeTable.sunday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.sunday[5]}">
+        <td  class="program_content" th:object="${timeTable.sunday[5]}">
             <span th:if="${timeTable.sunday[5] != null}"
-                  th:text="${timeTable.sunday[5].course.name}">IE</span>
+                  th:text="${timeTable.sunday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.sunday[5] != null}"
-                  th:text="${timeTable.sunday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.sunday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     <tr>
-        <td>Monday</td>
-        <td th:object="${timeTable.monday[0]}">
+        <td class="table_title">دوشنبه</td>
+        <td  class="program_content" th:object="${timeTable.monday[0]}">
             <span th:if="${timeTable.monday[0] != null}"
-                  th:text="${timeTable.monday[0].course.name}">IE</span>
+                  th:text="${timeTable.monday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[0] != null}"
-                  th:text="${timeTable.monday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.monday[1]}">
+        <td  class="program_content" th:object="${timeTable.monday[1]}">
             <span th:if="${timeTable.monday[1] != null}"
-                  th:text="${timeTable.monday[1].course.name}">IE</span>
+                  th:text="${timeTable.monday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[1] != null}"
-                  th:text="${timeTable.monday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.monday[2]}">
+        <td  class="program_content" th:object="${timeTable.monday[2]}">
             <span th:if="${timeTable.monday[2] != null}"
-                  th:text="${timeTable.monday[2].course.name}">IE</span>
+                  th:text="${timeTable.monday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[2] != null}"
-                  th:text="${timeTable.monday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.monday[3]}">
+        <td  class="program_content" th:object="${timeTable.monday[3]}">
             <span th:if="${timeTable.monday[3] != null}"
-                  th:text="${timeTable.monday[3].course.name}">IE</span>
+                  th:text="${timeTable.monday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[3] != null}"
-                  th:text="${timeTable.monday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.monday[4]}">
+        <td  class="program_content" th:object="${timeTable.monday[4]}">
             <span th:if="${timeTable.monday[4] != null}"
-                  th:text="${timeTable.monday[4].course.name}">IE</span>
+                  th:text="${timeTable.monday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[4] != null}"
-                  th:text="${timeTable.monday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.monday[5]}">
+        <td  class="program_content" th:object="${timeTable.monday[5]}">
             <span th:if="${timeTable.monday[5] != null}"
-                  th:text="${timeTable.monday[5].course.name}">IE</span>
+                  th:text="${timeTable.monday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.monday[5] != null}"
-                  th:text="${timeTable.monday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.monday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     <tr>
-        <td>Tuesday</td>
-        <td th:object="${timeTable.tuesday[0]}">
+        <td class="table_title">سه‌شنبه</td>
+        <td  class="program_content" th:object="${timeTable.tuesday[0]}">
             <span th:if="${timeTable.tuesday[0] != null}"
-                  th:text="${timeTable.tuesday[0].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[0] != null}"
-                  th:text="${timeTable.tuesday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.tuesday[1]}">
+        <td  class="program_content" th:object="${timeTable.tuesday[1]}">
             <span th:if="${timeTable.tuesday[1] != null}"
-                  th:text="${timeTable.tuesday[1].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[1] != null}"
-                  th:text="${timeTable.tuesday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.tuesday[2]}">
+        <td  class="program_content" th:object="${timeTable.tuesday[2]}">
             <span th:if="${timeTable.tuesday[2] != null}"
-                  th:text="${timeTable.tuesday[2].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[2] != null}"
-                  th:text="${timeTable.tuesday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.tuesday[3]}">
+        <td  class="program_content" th:object="${timeTable.tuesday[3]}">
             <span th:if="${timeTable.tuesday[3] != null}"
-                  th:text="${timeTable.tuesday[3].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[3] != null}"
-                  th:text="${timeTable.tuesday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.tuesday[4]}">
+        <td  class="program_content" th:object="${timeTable.tuesday[4]}">
             <span th:if="${timeTable.tuesday[4] != null}"
-                  th:text="${timeTable.tuesday[4].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[4] != null}"
-                  th:text="${timeTable.tuesday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.tuesday[5]}">
+        <td  class="program_content" th:object="${timeTable.tuesday[5]}">
             <span th:if="${timeTable.tuesday[5] != null}"
-                  th:text="${timeTable.tuesday[5].course.name}">IE</span>
+                  th:text="${timeTable.tuesday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.tuesday[5] != null}"
-                  th:text="${timeTable.tuesday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.tuesday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     <tr>
-        <td>Wednesday</td>
-        <td th:object="${timeTable.wednesday[0]}">
+        <td class="table_title">چهارشنبه</td>
+        <td  class="program_content" th:object="${timeTable.wednesday[0]}">
             <span th:if="${timeTable.wednesday[0] != null}"
-                  th:text="${timeTable.wednesday[0].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[0] != null}"
-                  th:text="${timeTable.wednesday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.wednesday[1]}">
+        <td  class="program_content" th:object="${timeTable.wednesday[1]}">
             <span th:if="${timeTable.wednesday[1] != null}"
-                  th:text="${timeTable.wednesday[1].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[1] != null}"
-                  th:text="${timeTable.wednesday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.wednesday[2]}">
+        <td  class="program_content" th:object="${timeTable.wednesday[2]}">
             <span th:if="${timeTable.wednesday[2] != null}"
-                  th:text="${timeTable.wednesday[2].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[2] != null}"
-                  th:text="${timeTable.wednesday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.wednesday[3]}">
+        <td  class="program_content" th:object="${timeTable.wednesday[3]}">
             <span th:if="${timeTable.wednesday[3] != null}"
-                  th:text="${timeTable.wednesday[3].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[3] != null}"
-                  th:text="${timeTable.wednesday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.wednesday[4]}">
+        <td  class="program_content" th:object="${timeTable.wednesday[4]}">
             <span th:if="${timeTable.wednesday[4] != null}"
-                  th:text="${timeTable.wednesday[4].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[4] != null}"
-                  th:text="${timeTable.wednesday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.wednesday[5]}">
+        <td  class="program_content" th:object="${timeTable.wednesday[5]}">
             <span th:if="${timeTable.wednesday[5] != null}"
-                  th:text="${timeTable.wednesday[5].course.name}">IE</span>
+                  th:text="${timeTable.wednesday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.wednesday[5] != null}"
-                  th:text="${timeTable.wednesday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.wednesday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     <tr>
-        <td>Thursday</td>
-        <td th:object="${timeTable.thursday[0]}">
+        <td class="table_title">پنج‌شنبه</td>
+        <td  class="program_content" th:object="${timeTable.thursday[0]}">
             <span th:if="${timeTable.thursday[0] != null}"
-                  th:text="${timeTable.thursday[0].course.name}">IE</span>
+                  th:text="${timeTable.thursday[0].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[0] != null}"
-                  th:text="${timeTable.thursday[0].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[0].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.thursday[1]}">
+        <td  class="program_content" th:object="${timeTable.thursday[1]}">
             <span th:if="${timeTable.thursday[1] != null}"
-                  th:text="${timeTable.thursday[1].course.name}">IE</span>
+                  th:text="${timeTable.thursday[1].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[1] != null}"
-                  th:text="${timeTable.thursday[1].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[1].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.thursday[2]}">
+        <td  class="program_content" th:object="${timeTable.thursday[2]}">
             <span th:if="${timeTable.thursday[2] != null}"
-                  th:text="${timeTable.thursday[2].course.name}">IE</span>
+                  th:text="${timeTable.thursday[2].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[2] != null}"
-                  th:text="${timeTable.thursday[2].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[2].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.thursday[3]}">
+        <td  class="program_content" th:object="${timeTable.thursday[3]}">
             <span th:if="${timeTable.thursday[3] != null}"
-                  th:text="${timeTable.thursday[3].course.name}">IE</span>
+                  th:text="${timeTable.thursday[3].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[3] != null}"
-                  th:text="${timeTable.thursday[3].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[3].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.thursday[4]}">
+        <td  class="program_content" th:object="${timeTable.thursday[4]}">
             <span th:if="${timeTable.thursday[4] != null}"
-                  th:text="${timeTable.thursday[4].course.name}">IE</span>
+                  th:text="${timeTable.thursday[4].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[4] != null}"
-                  th:text="${timeTable.thursday[4].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[4].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
-        <td th:object="${timeTable.thursday[5]}">
+        <td class="program_content" th:object="${timeTable.thursday[5]}">
             <span th:if="${timeTable.thursday[5] != null}"
-                  th:text="${timeTable.thursday[5].course.name}">IE</span>
+                  th:text="${timeTable.thursday[5].course.name}">IE</span><br>
             <span th:if="${timeTable.thursday[5] != null}"
-                  th:text="${timeTable.thursday[5].instructor.name}">Professor Morteza Noferesti</span>
+                  th:text="${timeTable.thursday[5].instructor.name}" class="program_content_name">Professor Morteza Noferesti</span>
         </td>
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class InstructorController {
 
     @GetMapping
     public String home(){
-        return "instructor/home";
+        return "common/home";
     }
 
     @GetMapping("/time-table")
@@ -63,11 +63,6 @@ public class InstructorController {
                             @ModelAttribute("now") Date now,
                             @PathVariable Long courseId,
                             Model model){
-        if(term.getExamStart().compareTo(now) > 0) {
-            model.addAttribute("type", "Exams");
-            return "common/NotStarted";
-        }
-
         model.addAttribute("students",
                 service.getInstructorCourse(instructor.getId(), term, courseId));
         return "instructor/courseStudents";
@@ -81,7 +76,7 @@ public class InstructorController {
                                  @PathVariable String studentUsername,
                                  Model model){
         if(term.getExamStart().compareTo(now) > 0) {
-            model.addAttribute("type", "Exams");
+            model.addAttribute("type", "امتحانات");
             return "common/NotStarted";
         }
 
@@ -103,7 +98,7 @@ public class InstructorController {
                                         @PathVariable String studentUsername,
                                         Model model){
         if(term.getExamStart().compareTo(now) > 0) {
-            model.addAttribute("type", "Exams");
+            model.addAttribute("type", "امتحانات");
             return "common/NotStarted";
         }
         if (gradeErrors.hasErrors())

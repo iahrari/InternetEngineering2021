@@ -1,32 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'برنامه‌ی امتحانات')}">
 <head>
     <meta charset="UTF-8">
     <title>Exam Time Table</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<table>
-    <thead>
-    <tr>
-        <th>
-            Course
-        </th>
-        <th>
-            Instructor
-        </th>
-        <th>
-            Date
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="exam" type="com.example.demo.model.InstructorCourse"*/-->
-    <tr th:each="exam: ${exams}">
-        <td th:text="${exam.course.name}">IE</td>
-        <td th:text="${exam.instructor.name}">Professor Morteza Noferessti</td>
-        <td th:text="${exam.examDate}">2021/10/11 11:00:00 AM</td>
-    </tr>
-    </tbody>
-</table>
+<body  class="send_container_to_center">
+    <div style="width:auto;">
+        <div>
+            <h3 class="table_header">برنامه ی امتحانات</h3>
+            <hr class="table_header_hr">
+        </div>
+        <table class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">
+                        نام درس            
+                    </th>
+                    <th class="table_title">
+                        استاد
+                    </th>
+                    <th class="table_title">
+                        تاریخ امتحان
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="exam: ${exams}" class="quiz_table_values">
+                    <td th:text="${exam.course.name}" class="quiz_table_index">IE</td>
+                    <td th:text="${exam.instructor.name}" class="quiz_table_index">Professor Morteza Noferessti</td>
+                    <td th:text="${exam.examDate}" class="quiz_table_index">2021/10/11 11:00:00 AM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

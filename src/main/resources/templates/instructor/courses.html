@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'لیست دوره ها  ')}">
+
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-<table>
-    <thead>
-    <tr>
-        <th>Course name</th>
-        <th>Student grades</th>
-    </tr>
 
-    </thead>
-    <tbody>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header">لیست دوره ها  </h3>
+            <hr class="table_header_hr">
+        </div>
+        <table  class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">نام درس</th>
+                    <th class="table_title">لیست نمرات</th>
+                </tr>
 
-    <!--/*@thymesVar id="course" type="com.example.demo.model.InstructorCourse"*/-->
-    <tr th:each="course: ${courses}">
-        <td th:text="${course.course.name}">IE</td>
-        <td><a th:href="@{/instructor/courses/__${course.course.id}__}">Details</a></td>
-    </tr>
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                <!--/*@thymesVar id="course" type="com.example.demo.model.InstructorCourse"*/-->
+                <tr th:each="course: ${courses}" class="quiz_table_values">
+                    <td th:text="${course.course.name}" class="quiz_table_index">IE</td>
+                    <td><a th:href="@{/instructor/courses/__${course.course.id}__}" class="quiz_table_index">جزییات</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

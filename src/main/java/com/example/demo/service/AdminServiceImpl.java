@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.exception.TimeTableConflictException;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
@@ -79,7 +80,7 @@ public class AdminServiceImpl implements AdminService {
                                  TimeTable timeTable, Term term,
                                  Date examDate) {
         Instructor instructor = instructorRepository.findByUsername(instructorUsername)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(instructorUsername));
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
 

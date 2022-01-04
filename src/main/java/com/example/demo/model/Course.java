@@ -18,7 +18,7 @@ public class Course {
     @GeneratedValue
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "نام درس نمی‌تواند خالی باشد")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)

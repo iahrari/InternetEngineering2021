@@ -1,0 +1,277 @@
+.send_container_to_center{
+    font-family: Vazir, lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+}
+
+.table_header{
+    text-align: center;
+    /* border-bottom: 3px solid #cccccc; */
+}
+
+.table_header_hr{
+    border: 2px solid #cccccc;
+    max-width: 500px;
+}
+
+.quiz_table{
+    float: left;
+    text-align: center;
+    margin-top: 10px;
+    width: 100%;
+    border-spacing: 22px;
+
+}
+
+.table_title{
+    text-align: center;
+    border: 1px solid #cccce4;
+    border-radius: 25px;
+    background-color: #cccce4;
+    font-size: medium;
+    padding:5px 20px 5px 20px;
+    /* width: 200px; */
+    border-collapse:collapse;
+    border-spacing: 20px;
+    min-width: 90px;
+}
+.quiz_table_title{
+    text-align: center;
+    font-size: medium;
+}
+
+.quiz_table_values{
+    /* border-bottom:1px double #727272; */
+    transition: all 0.2s;
+    color: #464545;
+}
+.quiz_table_values:hover{
+    color: black ;
+}
+
+.quiz_table_index{
+    padding: 7px 20px 7px 20px;
+}
+
+.program_content{
+    text-align: center;
+    border-spacing: 20px;
+    font-size: 16px;
+}
+.program_content_name{
+    font-size: 12px;
+}
+
+.enroll_btn{
+    /* color: white; */
+    font-family: lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #cccce4;
+    padding: 6px 25px 6px 25px;
+    border-radius: 25px;
+    border:1px solid  #cccce4;
+}
+.enroll_btn:hover{
+    color: white;
+    background-color: orange;
+}
+
+.grade_form{
+    margin-top: 25px;
+    text-align: center;
+    display: static ;
+
+}
+
+.grade_form_input{
+    background-color:#cccce4 ;
+    border: 1px solid #cccce4;
+    padding: 7px 25px 7px 25px ;
+    border-radius: 25px;
+    max-width: 100px;
+}
+
+.grade_form_btn{
+    font-family: lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 25px;
+    margin-left:10px ;
+    margin-right:10px ;
+    padding: 7px 25px 7px 25px;
+    background-color: #296379;
+    border: 1px solid #296379;
+    border-radius: 25px;
+    color :white;
+    /* font-size: 15px; */
+    min-width:100px;
+}
+
+.quiz_table_btn{
+    font-family: lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #296379;
+    border: 1px solid #296379;
+    border-radius: 25px;
+    padding: 7px 20px 7px 20px;
+    color:white;
+}
+
+.admin_form{
+    margin-top: 25px;
+    text-align: center;
+    display: static ;
+
+}
+
+.admin_form_input{
+    background-color:#cccce4 ;
+    border: 1px solid #cccce4;
+    padding: 7px 25px 7px 25px ;
+    border-radius: 25px;
+    max-width: 600px;
+}
+
+.admin_form_btn{
+    font-family: lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 25px;
+    margin-left:10px ;
+    margin-right:10px ;
+    padding: 7px 25px 7px 25px;
+    background-color: #296379;
+    border: 1px solid #296379;
+    border-radius: 25px;
+    color :white;
+    /* font-size: 15px; */
+    min-width:100px;
+}
+
+.admin_form_lable{
+    position: relative;
+    float: right;
+    left: -200px;
+}
+
+.add_admin_form{
+    display: none;
+    transition: all 1s;
+}
+
+.inst_form_input{
+    background-color:#cccce4 ;
+    border: 1px solid #cccce4;
+    padding: 7px 25px 7px 25px ;
+    border-radius: 25px;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.inst_form_btn{
+    font-family: lalezar , Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 25px;
+    margin-left:10px ;
+    margin-right:10px ;
+    padding: 7px 25px 7px 25px;
+    background-color: #296379;
+    border: 1px solid #296379;
+    border-radius: 25px;
+    color :white;
+    /* font-size: 15px; */
+    min-width:100px;
+}
+
+.inst_form_lable{
+    position: relative;
+    float: right;
+    left: -200px;
+}
+
+.inst_form_input_daytime{
+    background-color:#cccce4 ;
+    border: 1px solid #cccce4;
+    padding: 7px 25px 7px 25px ;
+    border-radius: 25px;
+    /* margin-top: 20px; */
+    margin-top: 10px;
+    max-width: 100px; 
+    margin-left: 20px; 
+    margin-right: 20px;
+    text-align: center;
+}
+.inst_form_input_examdate{
+    background-color:#cccce4 ;
+    border: 1px solid #cccce4;
+    padding: 7px 25px 7px 25px ;
+    border-radius: 25px;
+}
+
+.isa_error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    margin: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align:middle;
+    border:  1px solid #D8000C;
+    border-radius: 25px;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir.eot');
+    src: url('../fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir.woff2') format('woff2'),
+    url('../fonts/Vazir.woff') format('woff'),
+    url('../fonts/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir-Bold.eot');
+    src: url('../fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir-Bold.woff2') format('woff2'),
+    url('../fonts/Vazir-Bold.woff') format('woff'),
+    url('../fonts/Vazir-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir-Black.eot');
+    src: url('../fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir-Black.woff2') format('woff2'),
+    url('../fonts/Vazir-Black.woff') format('woff'),
+    url('../fonts/Vazir-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir-Medium.eot');
+    src: url('../fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir-Medium.woff2') format('woff2'),
+    url('../fonts/Vazir-Medium.woff') format('woff'),
+    url('../fonts/Vazir-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir-Light.eot');
+    src: url('../fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir-Light.woff2') format('woff2'),
+    url('../fonts/Vazir-Light.woff') format('woff'),
+    url('../fonts/Vazir-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/Vazir-Thin.eot');
+    src: url('../fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Vazir-Thin.woff2') format('woff2'),
+    url('../fonts/Vazir-Thin.woff') format('woff'),
+    url('../fonts/Vazir-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}

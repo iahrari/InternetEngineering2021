@@ -1,54 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::body}, 'ثبت درس جدید')}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/CSS/Style.css"
+          th:href="@{/CSS/Style.css}">
 </head>
-<body>
-    <form method="post" th:action="@{/admin/assign-course/__${courseId}__}" th:object="${assign}">
-        <input type="number" min="1397" max="1500"
-               th:placeholder="${currentTerm.termDate.year}"
-               placeholder="Year" disabled><br>
 
-        <input type="number" max="1" min="0"
-               th:value="${currentTerm.termDate.term}"
-               placeholder="Term" disabled><br>
+<body class="send_container_to_center">
+    <div style="width: auto;">
+        <div>
+            <h3 class="table_header">ثبت درس جدید</h3>
+            <hr class="table_header_hr">
+        </div>
+        <form method="post" th:action="@{/admin/assign-course/__${courseId}__}" th:object="${assign}" class="admin_form">
+            <div class="isa_error" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err: ${#fields.allErrors()}" th:text="${err}">Error!</li>
+                </ul>
+            </div>
+            <label for="username" class="admin_form_lable">شناسه کاربری :</label><br>
+            <input type="text" th:field="${assign.instructorId}" placeholder="شناسه استاد" class="inst_form_input"><br>
+            <input type="number" min="1397" max="1500" th:placeholder="${currentTerm.termDate.year}" placeholder="Year"
+                disabled class="inst_form_input"><br>
 
-        <input type="text" th:field="${assign.instructorId}" placeholder="Instructor Username"><br>
-        <input type="text" th:field="${assign.saturday}" placeholder="Saturday"><br>
-        <input type="text" th:field="${assign.sunday}" placeholder="sunday"><br>
-        <input type="text" th:field="${assign.monday}" placeholder="monday"><br>
-        <input type="text" th:field="${assign.tuesday}" placeholder="tuesday"><br>
-        <input type="text" th:field="${assign.wednesday}" placeholder="wednesday"><br>
-        <input type="text" th:field="${assign.thursday}" placeholder="thursday"><br><br>
+            <input type="number" max="1" min="0" th:value="${currentTerm.termDate.term}" placeholder="Term"
+                disabled class="inst_form_input"><br>
+            <div>
+                <h3 class="table_header" style="font-size: 13px;">ثبت ساعت کلاس ها    </h3>
+                <hr class="table_header_hr">
+            </div>
+            <div style="display: flex; justify-content: space-around;">
+                <label for="saturday">شنبه:</label>
+                <label for="sunday">یکشنبه:</label>
+                <label for="monday">دوشنبه:</label>
+            </div>
+            <!-- <br> -->
+            <input type="text" th:field="${assign.saturday}" placeholder="شنبه" class="inst_form_input_daytime">
+            <input type="text" th:field="${assign.sunday}" placeholder="یکشنبه" class="inst_form_input_daytime">
+            <input type="text" th:field="${assign.monday}" placeholder="دوشنبه" class="inst_form_input_daytime">
+            <div style="display: flex; justify-content: space-around;">
+                <label for="tuesday" style="margin-top: 10px;">سه شنبه:</label>
+                <label for="wednesday" style="margin-top: 10px;">چهارشنبه:</label>
+                <label for="thursday" style="margin-top: 10px;">پنجشنبه:</label>
+            </div>
+            <input type="text" th:field="${assign.tuesday}" placeholder="سه‌شنبه" class="inst_form_input_daytime">
+            <input type="text" th:field="${assign.wednesday}" placeholder="چهارشنبه" class="inst_form_input_daytime">
+            <input type="text" th:field="${assign.thursday}" placeholder="پنج‌شنبه" class="inst_form_input_daytime"><br><br>
 
-        <label for="examStart">Exam date: </label>
-        <input id="examStart" type="datetime-local" th:field="${assign.examDate}"/><br>
-<!--               th:min="${#dates.format(currentTerm.examStart, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examStart, 'HH:mm:ss')}"-->
-<!--               th:max="${#dates.format(currentTerm.examEnd, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examEnd, 'HH:mm:ss')}"-->
+            <label for="examStart">تاریخ امتحان: </label><br>
+            <input id="examStart" type="datetime-local" th:field="${assign.examDate}" class="inst_form_input_examdate"/><br>
+            <!--                   th:min="${#dates.format(currentTerm.examStart, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examStart, 'HH:mm:ss')}"-->
+            <!--                   th:max="${#dates.format(currentTerm.examEnd, 'yyyy-MM-dd') + 'T' + #dates.format(currentTerm.examEnd, 'HH:mm:ss')}"-->
 
-        <button type="submit">Submit</button>
-    </form>
+            <button type="submit" class="inst_form_btn">ثبت</button>
+        </form>
+        <div>
+            <h3 class="table_header">لیست دروس</h3>
+            <hr class="table_header_hr">
+        </div>
 
-    <table th:if="${!courseList.isEmpty()}">
-        <thead>
-        <tr>
-            <th>Course name</th>
-            <th>Instructor username</th>
-            <th>Time table</th>
-            <th>Exam</th>
-        </tr>
+        <table th:if="${!courseList.isEmpty()}"  class="quiz_table">
+            <thead>
+                <tr>
+                    <th class="table_title">نام درس</th>
+                    <th class="table_title">نام استاد</th>
+                    <th class="table_title">برنامه کلاسی</th>
+                    <th class="table_title">امتحان</th>
+                </tr>
 
-        </thead>
-        <tbody>
-        <!--/*@thymesVar id="te" type="com.example.demo.model.InstructorCourse"*/-->
-        <tr th:each="te: ${courseList}">
-            <td th:text="${te.course.name}">IE</td>
-            <td th:text="${te.instructor.getUsername()}">ins</td>
-            <td th:text="${te.timeTable}">2021-12-10</td>
-            <td th:text="${te.examDate}">2021-12-10</td>
-        </tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <!--/*@thymesVar id="te" type="com.example.demo.model.InstructorCourse"*/-->
+                <tr th:each="te: ${courseList}" class="quiz_table_values">
+                    <td th:text="${te.course.name}" class="quiz_table_index">IE</td>
+                    <td th:text="${te.instructor.getUsername()}" class="quiz_table_index">ins</td>
+                    <td th:object="${te.timeTable}" class="quiz_table_index">
+                        <span th:if="*{saturday != null}" th:text="'شنبه: ' + *{saturday}"/>
+                        <span th:if="*{sunday != null}" th:text="'یکشنبه: ' + *{sunday}"/>
+                        <span th:if="*{monday != null}" th:text="'دوشنبه: ' + *{monday}"/>
+                        <span th:if="*{tuesday != null}" th:text="'سه‌شنبه: ' + *{tuesday}"/>
+                        <span th:if="*{wednesday != null}" th:text="'چهارشنبه: ' + *{wednesday}"/>
+                        <span th:if="*{thursday != null}" th:text="'پنج‌شنبه: ' + *{thursday}"/>
+                    </td>
+                    <td th:text="${te.examDate}" class="quiz_table_index">2021-12-10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
