@@ -30,7 +30,7 @@ public class AdminController {
                 Term.builder().termDate(Term.TermDate.builder().build()).build());
         return "admin/newTerm";
     }
-//admin/admins
+
     @GetMapping("/admins")
     public String adminForm(Model model){
         model.addAttribute("admins", service.getAllAdmins());
@@ -75,7 +75,7 @@ public class AdminController {
         } catch (RuntimeException e){
             errors.rejectValue("enrollStart",
                     "error.term.conflict",
-                    "There's a conflict with a term: " + e.getMessage());
+                    "این ترم با ترم مقابل تداخل دارد: " + e.getMessage());
             model.addAttribute("terms", service.getAllTerms());
             return "admin/newTerm";
         }
@@ -161,7 +161,7 @@ public class AdminController {
                 && ((assign.getExamDate().compareTo(currentTerm.getExamStart()) < 0)
                 || (assign.getExamDate().compareTo(currentTerm.getExamEnd()) > 0))){
             assignErrors.rejectValue("examDate", "error.exam.date",
-                    "Date of exam should be in exam time");
+                    "زمان امتحان باید در بازه امتحانات باشد.");
         }
         if (assignErrors.hasErrors()) {
             model.addAttribute("courseList", service.getInstructorSpecialCourse(currentTerm, courseId));

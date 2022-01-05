@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Student;
 import com.example.demo.model.Term;
 import com.example.demo.repository.TermRepository;
-import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +13,6 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class GameController {
     private final TermRepository termRepository;
-    private final UserRepository userRepository;
 
     @GetMapping
     public void check(){
@@ -37,6 +34,5 @@ public class GameController {
                 .build();
 
         termRepository.save(term);
-        userRepository.save(Student.builder().family(""))
     }
 }

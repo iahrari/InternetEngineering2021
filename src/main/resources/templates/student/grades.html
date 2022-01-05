@@ -27,7 +27,7 @@
                     <tr th:each="grade: ${grades}" th:if="${grade.grade != null}"
                         class="test">
                         <td th:text="${grade.instructorCourse.course.name}">IE</td>
-                        <td th:text="${grade.instructorCourse.instructor.name}">IE</td>
+                        <td th:text="${grade.instructorCourse.instructor.name + ' ' + grade.instructorCourse.instructor.family}">IE</td>
                         <td th:text="${grade.grade}">16.45</td>
                     </tr>
                 </div>

@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void newInstructor(Instructor instructor) {
         if (userRepository.existsByUsername(instructor.getUsername()))
-            throw new RuntimeException(instructor.getUsername() + " is taken");
+            throw new RuntimeException(instructor.getUsername() + " قبلا توسط کاربر دیگری اخذ شده‌است.");
 
         userRepository.save(Instructor.builder()
                 .family(instructor.getFamily())
@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void newAdmin(Admin admin) {
         if (userRepository.existsByUsername(admin.getUsername()))
-            throw new RuntimeException(admin.getUsername() + " is taken");
+            throw new RuntimeException(admin.getUsername() + " قبلا توسط کاربر دیگری اخذ شده‌است.");
 
         adminRepository.save(Admin.builder()
                 .family(admin.getFamily())
@@ -58,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void newStudent(Student student) {
         if (userRepository.existsByUsername(student.getUsername()))
-            throw new RuntimeException(student.getUsername() + " is taken");
+            throw new RuntimeException(student.getUsername() + " قبلا توسط کاربر دیگری اخذ شده‌است.");
 
         studentRepository.save(Student.builder()
                 .family(student.getFamily())
@@ -115,12 +115,12 @@ public class AdminServiceImpl implements AdminService {
                 term.getEnrollStart(), term.getExamEnd())
                 .stream().findAny()
                 .map(t -> new RuntimeException(
-                        t.getEnrollStart().toString() + " - " + t.getExamEnd().toString()));
+                        t.getTermDate().getYear() + " - " + t.getTermDate().getTerm()));
         Optional<RuntimeException> b = termRepository.findAllByExamEndBetween(
                 term.getEnrollStart(), term.getExamEnd())
                 .stream().findAny()
                 .map(t -> new RuntimeException(
-                    t.getEnrollStart().toString() + " - " + t.getExamEnd().toString()));
+                        t.getTermDate().getYear() + " - " + t.getTermDate().getTerm()));
 
         if (a.isPresent()) throw a.get();
         if (b.isPresent()) throw b.get();

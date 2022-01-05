@@ -67,7 +67,6 @@ public class StudentController {
                     " با " + e.getWanted().getCourse().getName() + " تداخل دارد";
             model.addAttribute("err", a);
             model.addAttribute("lessonList", service.getTermInstructorCourse(term, student));
-//            model.addAttribute("id", InstructorCourse.TCId.builder().build());
             return "student/enrollment";
         }
         return "redirect:/student/enrollment";
